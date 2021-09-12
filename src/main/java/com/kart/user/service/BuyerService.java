@@ -80,7 +80,7 @@ public class BuyerService {
 
 	//Login check
 	public boolean login(LoginDTO loginDTO) {
-		logger.info("Login request for customer {} with password {}", loginDTO.getEmail(),loginDTO.getPassword());
+		logger.info("Login request for customer {} with password {}");
 		Buyer buy = buyerRepo.findByEmail(loginDTO.getEmail());
 		if (buy != null && buy.getPassword().equals(loginDTO.getPassword())) {
 			return true;
@@ -107,8 +107,8 @@ public class BuyerService {
 	//Remove from cart
 	public String removeFromCart(String buyerid, String prodid) throws Exception{
 		Optional<Cart> cart = cartRepo.findByBuyeridAndProdid(buyerid, prodid);
-		cart.orElseThrow(() -> new Exception("No data Found with given user data"));
-		cartRepo.deleteByBuyeridAndProdid(buyerid , prodid);
+		Cart c = cart.orElseThrow(() -> new Exception("No data Found with given user data"));
+		cartRepo.deleteByBuyeridAndProdid(c.getBuyerid() , c.getProdid());
 		return "Removed from the cart";
 	}
 
@@ -122,18 +122,18 @@ public class BuyerService {
 	//Move from wishlist to cart
 	public String moveFromWishlistToCart(CartDTO cartDTO) throws Exception{
 		Optional<Wishlist> wish = wishRepo.findByBuyeridAndProdid(cartDTO.getBuyerid(), cartDTO.getProdid());
-		wish.orElseThrow(() -> new Exception("No data Found with given user data"));
+		Wishlist w = wish.orElseThrow(() -> new Exception("No data Found with given user data"));
 		Cart cart = cartDTO.createEntity();
 		cartRepo.save(cart);
-		wishRepo.deleteByBuyeridAndProdid(cartDTO.getBuyerid(), cartDTO.getProdid());
+		wishRepo.deleteByBuyeridAndProdid(w.getBuyerid(), w.getProdid());
 		return "Added to the cart";
 	}
 
 	//Remove from wishlist
 	public String removeFromWishlist(WishlistDTO wishDTO) throws Exception{
 		Optional<Wishlist> wish = wishRepo.findByBuyeridAndProdid(wishDTO.getBuyerid(),wishDTO.getProdid());
-		wish.orElseThrow(() -> new Exception("No data Found with given user data"));
-		wishRepo.deleteByBuyeridAndProdid(wishDTO.getBuyerid(),wishDTO.getProdid());
+		Wishlist w = wish.orElseThrow(() -> new Exception("No data Found with given user data"));
+		wishRepo.deleteByBuyeridAndProdid(w.getBuyerid(), w.getProdid());
 		return "Removed from the wishlist";
 	}
 

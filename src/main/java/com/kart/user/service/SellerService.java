@@ -52,7 +52,7 @@ public class SellerService {
 	
 	//Login
 	public boolean login(LoginDTO loginDTO) {
-		logger.info("Login request for customer {} with password {}", loginDTO.getEmail(),loginDTO.getPassword());
+		logger.info("Login request for customer {} with password {}");
 		Seller sell = sellerrepo.findByEmail(loginDTO.getEmail());
 		if (sell != null && sell.getPassword().equals(loginDTO.getPassword()) && sell.getIsactive()) {
 			return true;

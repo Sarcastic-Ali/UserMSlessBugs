@@ -7,7 +7,7 @@ public class ProductDTO {
 	String prodid;
 
 	@NotNull(message = "Product name absent")
-	@Pattern(regexp = "[A-Za-z]+( [A-Za-z]+)*", message = "Invalid Product Name")
+	@Pattern(regexp = "[a-zA-Z][a-zA-Z ]*", message = "Invalid Product Name")
 	String productname;
 	
 	@Min(value=200, message="Minumum value is 200")

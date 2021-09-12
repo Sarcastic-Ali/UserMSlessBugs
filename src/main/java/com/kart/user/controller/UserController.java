@@ -78,7 +78,7 @@ public class UserController {
 	@PostMapping(value = "/api/buyer/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean login(@RequestBody LoginDTO loginDTO) {
 		
-		logger.info("Login request for customer {} with password {}", loginDTO.getEmail(),loginDTO.getPassword());
+		logger.info("Login request for customer {} with password {}");
 		return buyerService.login(loginDTO);
 	}
 
@@ -99,6 +99,8 @@ public class UserController {
 		//URI productUri = Pinstance.getUri();
 		
 		ProductDTO prod = new RestTemplate().getForObject(productUri+ "api/productid/" + cartDTO.getProdid(), ProductDTO.class);
+		
+		if(prod != null) {
 		if(prod.getStock() > cartDTO.getQuantity())
 		{
 		logger.info("Additing to cart", cartDTO);
@@ -110,6 +112,8 @@ public class UserController {
 			String successMessage  = "Out of Stock";
 			return new ResponseEntity<>(successMessage, HttpStatus.OK);
 		}
+		}
+		return null;
 	}
 
 	//Removing from cart
@@ -129,6 +133,7 @@ public class UserController {
 		//URI productUri = Pinstance.getUri(); 
 		
 		ProductDTO prod = new RestTemplate().getForObject(productUri+ "api/productid/" + cartDTO.getProdid(), ProductDTO.class);
+		if(prod != null) {
 		if(prod.getStock() > cartDTO.getQuantity())
 		{
 		logger.info("Moving to cart", cartDTO);
@@ -146,6 +151,8 @@ public class UserController {
 			String successMessage  = "Out of Stock";
 			return new ResponseEntity<>(successMessage, HttpStatus.OK);
 		}
+		}
+		return null;
 	}
 	
 	//get buyer's cart detail
@@ -197,7 +204,7 @@ public class UserController {
 	@PostMapping(value = "/api/seller/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean Login(@RequestBody LoginDTO loginDTO) {
 		
-		logger.info("Login request for seller {} with password {}", loginDTO.getEmail(),loginDTO.getPassword());
+		logger.info("Login request for seller {} with password {}");
 		return sellerService.login(loginDTO);
 	}
 

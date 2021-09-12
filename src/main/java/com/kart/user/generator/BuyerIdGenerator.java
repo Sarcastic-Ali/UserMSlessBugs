@@ -30,12 +30,16 @@ public class BuyerIdGenerator implements IdentifierGenerator {
 				    suffix = String.valueOf(id);
 					return prefix + suffix;
 	            }
+		        statement.close();
+		        connection.close();
 		        
 		    } catch (SQLException e) {
 		       
 		        e.printStackTrace();
 		    }
+		   
 		    return null;
+		   
 	}
 
 }

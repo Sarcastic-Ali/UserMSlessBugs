@@ -30,6 +30,8 @@ public class SellerIdGenerator implements IdentifierGenerator {
 				    suffix = String.valueOf(id);
 					return prefix + suffix;
 	            }
+		        statement.close();
+		        connection.close();
 		        
 		    } catch (SQLException e) {
 		       

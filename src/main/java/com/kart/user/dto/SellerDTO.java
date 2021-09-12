@@ -11,7 +11,7 @@ public class SellerDTO {
 	String sellerid;
 	
 	@NotNull(message = "Please provide customer name")
-    @Pattern(regexp="[A-Za-z]+( [A-Za-z]+)*", message="Name should contain only alphabets and space")
+    @Pattern(regexp="[a-zA-Z][a-zA-Z ]*", message="Name should contain only alphabets and space")
 	String name;
 	
 	@Email(message = "Please provide valid email address")
